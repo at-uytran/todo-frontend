@@ -17,7 +17,7 @@ const config = {
 
 export const loadUser = () => (dispatch, getState) => {
   dispatch({type: USER_LOADING});
-  return axios.post(`${API_URL}/api/auth/user`, {}, tokenConfig(getState))
+  return axios.get(`${API_URL}/api/auth/user`, {}, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: USER_LOADED,

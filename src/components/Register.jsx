@@ -24,7 +24,6 @@ const tailLayout = {
 
 class Register extends React.Component {
   state = {
-    userName: '',
     email: '',
     password: '',
     msg: null,
@@ -40,15 +39,14 @@ class Register extends React.Component {
 
   onFinish = (values) => {
     this.setState(values);
-    var {userName, email, password} = this.state;
-    var newUser = {userName, email, password};
+    var {email, password} = this.state;
+    var newUser = {email, password};
     this.props.register(newUser);
   };
 
   onFinishFailed(errorInfo) {
     console.log('Failed:', errorInfo);
   };
-
 
   render() {
     return(
@@ -67,16 +65,6 @@ class Register extends React.Component {
               }}
               onFinish={this.onFinish}
               onFinishFailed={this.onFinishFailed}>
-              <Form.Item label="UserName"
-                name="userName"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Username',
-                  },
-                ]}>
-                <Input />
-              </Form.Item>
               <Form.Item label="Email"
                 name="email"
                 rules={[

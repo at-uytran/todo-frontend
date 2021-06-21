@@ -18,15 +18,10 @@ const tailLayout = {
   },
 };
 const onFinish = (values) => {
-  console.log('Success:', values);
-  console.log(API_URL);
-  let api = `${API_URL}/auth/sign_in`;
+  let api = `${API_URL}/api/auth/sign_in`;
   axios.post(api, values).then((res) => {
-    console.log(res.data);
     var token = res.data.accessToken;
-    console.log(res.data.data.accessToken)
   }).catch(err => {console.log(err.response)})
-
 };
 
 const onFinishFailed = (errorInfo) => {
@@ -54,12 +49,12 @@ class Login extends React.Component {
               initialValues={{}}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}>
-              <Form.Item label="Username"
-                name="userName"
+              <Form.Item label="Email"
+                name="email"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your username!',
+                    message: 'Please input your email!',
                   },
                 ]}>
                 <Input />
