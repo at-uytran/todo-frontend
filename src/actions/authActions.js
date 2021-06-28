@@ -17,7 +17,7 @@ const config = {
 
 export const loadUser = () => (dispatch, getState) => {
   dispatch({type: USER_LOADING});
-  return axios.get(`${API_URL}/api/auth/user`, {}, tokenConfig(getState))
+  return axios.get(`${API_URL}/api/auth/user`, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: USER_LOADED,
@@ -30,8 +30,8 @@ export const loadUser = () => (dispatch, getState) => {
     });
 }
 
-export const register = ({userName, email, password}) => dispatch => {
-  const body = JSON.stringify({userName, email, password});
+export const register = ({email, password}) => dispatch => {
+  const body = JSON.stringify({email, password});
   axios.post(`${API_URL}/api/register`, body, config)
     .then(res => {
       dispatch({type: REGISTER_SUCCESS, payload: res.data.data});
@@ -44,8 +44,9 @@ export const register = ({userName, email, password}) => dispatch => {
 
 export const login = ({email, password}) => dispatch => {
   const body = JSON.stringify({email, password});
-  axios.post(`${API_URL}/api/auth/login`, body, config)
+  axios.post(`${API_URL}/api/auth/sign_in`, body, config)
     .then(res => {
+      console.log(res.data)
       dispatch({type: LOGIN_SUCCESS, payload: res.data.data});
     })
     .catch(err => {
@@ -59,7 +60,9 @@ export const logout = () => {
 }
 
 export const tokenConfig = (getState) => {
+  console.log(getState())
   const token = getState().auth.token;
+  console.log(token)
   if (token) {
     config.headers['authorizationToken'] = `Bearer ${token}`;
   }
